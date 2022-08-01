@@ -8,7 +8,6 @@ export function MainContent(): JSX.Element {
     refetchOnWindowFocus: false,
   });
   const planets = data?.results;
-
   return (
     <ul>
       {planets?.map((planet) => (

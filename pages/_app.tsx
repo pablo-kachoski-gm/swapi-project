@@ -12,6 +12,12 @@ import en from '@/i18n/en.json';
 import { DEFAULT_LANG } from '@/commons/constants/lang';
 import { GetLayout, MyAppProps } from '@/commons/types/app';
 
+if (process.env.NEXT_PUBLIC_API_MOCKING === 'true') {
+  import('@/commons/mocks').then(({ setupMocks }) => {
+    setupMocks();
+  });
+}
+
 const MESSAGES: Record<string, I18nFile> = {
   en,
 };
