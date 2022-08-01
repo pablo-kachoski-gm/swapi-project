@@ -1,8 +1,16 @@
 {
   "page.planets.head.title": "SW Planets",
   "page.planets.title": "StarWars Planets",
+  "page.planets.search.placeholder": "Search",
+  "page.planets.labels.population.title": "Population",
+  "page.planets.labels.rotation.title": "Rotation Period",
+  "page.planets.labels.orbital.title": "Orbital Period",
+  "page.planets.labels.diameter.title": "Diameter",
+  "page.planets.labels.detailsButton.title": "See details",
+
   "page.planet.head.title": "SW Planet",
   "page.planet.title": "StarWars Details",
+
   "page.resident.head.title": "SW Resident",
   "page.resident.title": "StarWars Resident"
 }

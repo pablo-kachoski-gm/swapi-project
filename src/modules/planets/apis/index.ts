@@ -1,1 +1,1 @@
-export { fetchPlanets } from './fetchPlanets';
+export { fetchPlanets } from './fetch-planets';
