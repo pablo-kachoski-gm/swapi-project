@@ -1,3 +1,4 @@
+import { planetHandlers } from './planet';
 import { planetsHandlers } from './planets';
 
-export const handlers = [...planetsHandlers];
+export const handlers = [...planetsHandlers, ...planetHandlers];

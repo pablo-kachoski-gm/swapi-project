@@ -18,6 +18,7 @@
     "paths": {
       "@/pages/*": ["pages/*"],
       "@/planets/*": ["src/modules/planets/*"],
+      "@/planet/*": ["src/modules/planet/*"],
       "@/components/*": ["src/components/*"],
       "@/commons/*": ["src/modules/commons/*"],
       "@/i18n*": ["conf/i18n/*"]
