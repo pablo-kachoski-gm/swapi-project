@@ -15,11 +15,13 @@ PlanetsPage.getLayout = function getLayout(page: ReactNode) {
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery([PLANETS_QUERY_KEY], getPlanets);
+  await queryClient.prefetchInfiniteQuery([PLANETS_QUERY_KEY], (props) =>
+    getPlanets(props?.pageParam)
+  );
 
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
+      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
     },
   };
 }

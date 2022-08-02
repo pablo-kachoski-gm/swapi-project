@@ -7,6 +7,10 @@
   "page.planets.labels.orbital.title": "Orbital Period",
   "page.planets.labels.diameter.title": "Diameter",
   "page.planets.labels.detailsButton.title": "See details",
+  "page.planets.loading": "Loading...",
+  "page.planets.fetchError": "Error fetching. Please contact support",
+  "page.planets.button.loadMoreResults": "Load more planets",
+  "page.planets.button.noMoreResults": "Nothing more to load",
 
   "page.planet.head.title": "SW Planet",
   "page.planet.title": "StarWars Details",
