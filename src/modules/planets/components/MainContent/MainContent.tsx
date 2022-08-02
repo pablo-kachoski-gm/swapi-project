@@ -1,15 +1,19 @@
-import { PLANETS_QUERY_KEY } from '@/commons/constants';
+import { PLANETS_QUERY_KEY, ROUTES } from '@/commons/constants';
 import { GridCard } from '@/planets/components/GridCard';
 import { PlanetsGridLayout } from '@/planets/components/PlanetsGridLayout';
 import { SearchBar } from '@/planets/components/SearchBar';
 import { usePlanetsFilter } from '@/planets/hooks/usePlanetsFilter';
 import { getPlanets } from '@/planets/services';
+import { PlanetWithId } from '@/planets/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 import { ChangeEvent, useCallback, useMemo, useRef } from 'react';
 import { LoadMoreButton } from '../LoadMoreButton';
 import { useTranslation } from './useTranslation';
+import { getPlanetIdFromURL } from './utils';
 
 export function MainContent(): JSX.Element {
+  const router = useRouter();
   const { hasNextPage, isLoading, fetchNextPage, data, error, isFetching } =
     useInfiniteQuery(
       [PLANETS_QUERY_KEY],
@@ -25,9 +29,16 @@ export function MainContent(): JSX.Element {
     useTranslation();
 
   const planets = useMemo(
-    () => data?.pages.flatMap((planetPage) => planetPage?.results) || [],
+    () =>
+      data?.pages.flatMap((planetPage) =>
+        planetPage?.results.map<PlanetWithId>((planet) => ({
+          ...planet,
+          id: getPlanetIdFromURL(planet.url),
+        }))
+      ) || [],
     [data]
   );
+
   const { filteredData, filterPlanets } = usePlanetsFilter(planets);
 
   const disabledLoadMoreButton = !hasNextPage || isFetching;
@@ -43,15 +54,27 @@ export function MainContent(): JSX.Element {
     searchRef.current.value = '';
   }, [fetchNextPage]);
 
-  if (isLoading) return <div className="loading">{loading}</div>;
-  if (error) return <div className="error">{fetchError}</div>;
+  const onGridCardButtonClick = useCallback(
+    (id: string) => {
+      const planetURL = [ROUTES.planets, id].join('/');
+      router.push(planetURL);
+    },
+    [router]
+  );
+
+  if (isLoading) return <div>{loading}</div>;
+  if (error) return <div>{fetchError}</div>;
 
   return (
     <>
       <SearchBar ref={searchRef} onChange={onSearchPlanet} />
       <PlanetsGridLayout>
         {filteredData?.map((planet) => (
-          <GridCard key={`${planet.name}`} planet={planet} />
+          <GridCard
+            key={`${planet.name}`}
+            planet={planet}
+            onClick={onGridCardButtonClick}
+          />
         ))}
       </PlanetsGridLayout>
       <div className="flex justify-center p-4">

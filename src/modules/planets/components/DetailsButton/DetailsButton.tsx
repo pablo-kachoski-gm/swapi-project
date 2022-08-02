@@ -1,9 +1,11 @@
+import { HTMLProps } from 'react';
 import { useTranslation } from './useTranslation';
 
-export function DetailsButton() {
+export function DetailsButton(props: HTMLProps<HTMLAnchorElement>) {
   const { detailsButtonLabel } = useTranslation();
   return (
     <a
+      {...props}
       className="inline-flex items-center 
         py-2 px-3 
         text-sm font-medium text-center text-white

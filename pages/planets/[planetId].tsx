@@ -6,11 +6,11 @@ import { MainLayout } from '@/planet/components/MainLayout';
 import { ReactNode } from 'react';
 import { NextPageContext } from 'next';
 
-export default function PlanetsPage() {
+export default function PlanetPage() {
   return <MainContent />;
 }
 
-PlanetsPage.getLayout = function getLayout(page: ReactNode) {
+PlanetPage.getLayout = function getLayout(page: ReactNode) {
   return <MainLayout>{page}</MainLayout>;
 };
 

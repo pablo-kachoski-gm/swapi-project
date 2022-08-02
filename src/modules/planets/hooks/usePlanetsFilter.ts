@@ -1,8 +1,8 @@
-import { Planet } from '@/commons/types';
 import debounce from 'lodash.debounce';
 import { useState, useEffect } from 'react';
+import { PlanetWithId } from '../types';
 
-export function usePlanetsFilter(planets: Planet[]) {
+export function usePlanetsFilter(planets: PlanetWithId[]) {
   const [filteredData, setFilteredData] = useState(planets);
 
   const filterPlanets = debounce((query) => {
