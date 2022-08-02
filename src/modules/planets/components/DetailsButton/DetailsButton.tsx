@@ -1,12 +1,7 @@
-import { useIntl } from 'react-intl';
+import { useTranslation } from './useTranslation';
 
 export function DetailsButton() {
-  const intl = useIntl();
-
-  const detailsButtonLabel = intl.formatMessage({
-    id: 'page.planets.labels.detailsButton.title',
-  });
-
+  const { detailsButtonLabel } = useTranslation();
   return (
     <a
       className="inline-flex items-center 

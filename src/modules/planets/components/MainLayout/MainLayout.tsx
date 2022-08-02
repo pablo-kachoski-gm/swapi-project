@@ -1,13 +1,10 @@
 import { PageTitle } from '@/commons/components/PageTitle';
 import Head from 'next/head';
 import { PropsWithChildren } from 'react';
-import { useIntl } from 'react-intl';
-import { SearchBar } from './SearchBar';
+import { useTranslation } from './useTranslation';
 
 export const MainLayout = ({ children }: PropsWithChildren) => {
-  const intl = useIntl();
-  const pageHeadTitle = intl.formatMessage({ id: 'page.planets.head.title' });
-  const pageTitle = intl.formatMessage({ id: 'page.planets.title' });
+  const { pageHeadTitle, pageTitle } = useTranslation();
 
   return (
     <div>
@@ -19,7 +16,6 @@ export const MainLayout = ({ children }: PropsWithChildren) => {
 
       <main className="min-h-screen px-16 py-4 flex flex-col align-center space-y-4">
         <PageTitle>{pageTitle}</PageTitle>
-        <SearchBar />
         {children}
       </main>
     </div>
