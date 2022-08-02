@@ -10,7 +10,7 @@ const MOCKED_PAGES: Record<string, Record<string, unknown>> = {
 };
 
 export const planetsHandlers = [
-  rest.get('https://swapi.dev/api/planets/', (req, res, ctx) => {
+  rest.get('https://swapi.dev/api/planets', (req, res, ctx) => {
     const pageNumber = req.url.searchParams.get('page') as string;
     const mockedPage = MOCKED_PAGES[pageNumber] || PAGE_1;
     return res(ctx.json(mockedPage));
