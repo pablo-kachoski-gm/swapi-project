@@ -6,6 +6,8 @@
   "page.planets.labels.rotation.title": "Rotation Period",
   "page.planets.labels.orbital.title": "Orbital Period",
   "page.planets.labels.diameter.title": "Diameter",
+  "page.planets.labels.terrain.title": "Terrain",
+  "page.planets.labels.gravity.title": "Gravity",
   "page.planets.labels.detailsButton.title": "See details",
   "page.planets.loading": "Loading...",
   "page.planets.fetchError": "Error fetching. Please contact support",

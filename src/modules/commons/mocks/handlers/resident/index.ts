@@ -1,0 +1,1 @@
+export { residentHandlers } from './resident';

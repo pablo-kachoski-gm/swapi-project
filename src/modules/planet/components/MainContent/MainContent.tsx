@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Planet } from '@/commons/types';
 import { useRouter } from 'next/router';
 import { PLANET_QUERY_KEY } from '@/commons/constants';
+import { PlanetInfo } from '../PlanetInfo';
 
 export function MainContent(): JSX.Element {
   const router = useRouter();
@@ -17,10 +18,5 @@ export function MainContent(): JSX.Element {
     }
   );
 
-  const planet = data as Planet;
-  return (
-    <>
-      <div>{planet?.name}</div>
-    </>
-  );
+  return <PlanetInfo planet={data as Planet} />;
 }
