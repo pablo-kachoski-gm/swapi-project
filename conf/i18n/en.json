@@ -16,6 +16,10 @@
 
   "page.planet.head.title": "SW Planet",
   "page.planet.title": "StarWars Planet Details",
+  "page.planet.labels.birth.title": "Birth year",
+  "page.planet.labels.gender.title": "Gender",
+  "page.planet.labels.hair.title": "Hair",
+  "page.planet.labels.eyeColor.title": "Eye color",
 
   "page.resident.head.title": "SW Resident",
   "page.resident.title": "StarWars Resident"

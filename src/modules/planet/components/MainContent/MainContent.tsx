@@ -1,15 +1,25 @@
-import { getPlanet } from '@/planet/services';
-import { useQuery } from '@tanstack/react-query';
+import { getPlanet, getResidentById } from '@/planet/services';
+import { useQueries, useQuery, UseQueryResult } from '@tanstack/react-query';
 import { Planet } from '@/commons/types';
 import { useRouter } from 'next/router';
-import { PLANET_QUERY_KEY } from '@/commons/constants';
+import {
+  PLANET_QUERY_KEY,
+  RESIDENT_QUERY_KEY,
+  ROUTES,
+} from '@/commons/constants';
 import { PlanetInfo } from '../PlanetInfo';
+import { Resident } from '@/commons/types/models';
+import { getResidentIdFromURL } from './utils';
+import { useCallback, useMemo } from 'react';
+import { ResidentWithId } from '@/planet/types';
+import { PlanetResidentsGridLayout } from '../PlanetResidentsGridLayout';
+import { GridCard } from '../GridCard';
 
 export function MainContent(): JSX.Element {
   const router = useRouter();
   const { planetId } = router.query;
 
-  const { data } = useQuery(
+  const { data: planet } = useQuery(
     [PLANET_QUERY_KEY],
     () => getPlanet(planetId as string),
     {
@@ -17,6 +27,51 @@ export function MainContent(): JSX.Element {
       refetchOnWindowFocus: false,
     }
   );
+  const residentQueries = useQueries({
+    queries: planet!.residents.map((residentURL) => {
+      const residentId = getResidentIdFromURL(residentURL);
+      return {
+        queryKey: [RESIDENT_QUERY_KEY, residentId],
+        queryFn: () => getResidentById(residentId),
+        enabled: !!planet,
+      };
+    }),
+  }) as UseQueryResult<Resident, unknown>[];
 
-  return <PlanetInfo planet={data as Planet} />;
+  const residents = useMemo(
+    () =>
+      residentQueries
+        ?.filter(({ isSuccess }) => isSuccess)
+        .map<ResidentWithId>(({ data }) => {
+          const resident = data as Resident;
+          return {
+            ...resident,
+            id: getResidentIdFromURL(resident?.url as string),
+          };
+        }),
+    [residentQueries]
+  );
+
+  const onGridCardButtonClick = useCallback(
+    (id: string) => {
+      const residentURL = [ROUTES.resident, id].join('/');
+      router.push(residentURL);
+    },
+    [router]
+  );
+
+  return (
+    <div className="flex flex-row justify-between">
+      <PlanetInfo planet={planet as Planet} />
+      <PlanetResidentsGridLayout>
+        {residents?.map((resident) => (
+          <GridCard
+            key={`${resident.name}`}
+            resident={resident}
+            onClick={onGridCardButtonClick}
+          />
+        ))}
+      </PlanetResidentsGridLayout>
+    </div>
+  );
 }
