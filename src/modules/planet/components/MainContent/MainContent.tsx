@@ -1,5 +1,5 @@
-import { getPlanet, getResidentById } from '@/planet/services';
-import { useQueries, useQuery, UseQueryResult } from '@tanstack/react-query';
+import { getPlanet } from '@/planet/services';
+import { useQueries, useQuery } from '@tanstack/react-query';
 import { Planet } from '@/commons/types';
 import { useRouter } from 'next/router';
 import {
@@ -14,6 +14,7 @@ import { useCallback, useMemo } from 'react';
 import { ResidentWithId } from '@/planet/types';
 import { PlanetResidentsGridLayout } from '../PlanetResidentsGridLayout';
 import { GridCard } from '../GridCard';
+import { getResidentById } from '@/commons/services';
 
 export function MainContent(): JSX.Element {
   const router = useRouter();
@@ -36,7 +37,7 @@ export function MainContent(): JSX.Element {
         enabled: !!planet,
       };
     }),
-  }) as UseQueryResult<Resident, unknown>[];
+  });
 
   const residents = useMemo(
     () =>
@@ -54,7 +55,7 @@ export function MainContent(): JSX.Element {
 
   const onGridCardButtonClick = useCallback(
     (id: string) => {
-      const residentURL = [ROUTES.resident, id].join('/');
+      const residentURL = [router.asPath, ROUTES.resident, id].join('/');
       router.push(residentURL);
     },
     [router]

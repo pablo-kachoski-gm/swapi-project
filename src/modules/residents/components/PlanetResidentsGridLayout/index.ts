@@ -1,0 +1,1 @@
+export { PlanetResidentsGridLayout } from './PlanetResidentsGridLayout';

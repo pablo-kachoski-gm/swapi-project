@@ -19,6 +19,7 @@
       "@/pages/*": ["pages/*"],
       "@/planets/*": ["src/modules/planets/*"],
       "@/planet/*": ["src/modules/planet/*"],
+      "@/residents/*": ["src/modules/residents/*"],
       "@/components/*": ["src/components/*"],
       "@/commons/*": ["src/modules/commons/*"],
       "@/i18n*": ["conf/i18n/*"]
