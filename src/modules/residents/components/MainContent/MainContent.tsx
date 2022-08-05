@@ -30,7 +30,7 @@ export function MainContent(): JSX.Element {
   return (
     <>
       <Breadcrumb items={breadcrumbItems} />
-      <ResidentInfo resident={resident as Resident} />;
+      <ResidentInfo resident={resident as Resident} />
     </>
   );
 }
