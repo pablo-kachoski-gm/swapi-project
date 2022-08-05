@@ -15,9 +15,18 @@ export function useTranslation() {
   const noMoreResults = intl.formatMessage({
     id: 'page.planets.button.noMoreResults',
   });
+  const planetsBreadcrumbLabel = intl.formatMessage({
+    id: 'page.planets.labels.breadcrumb.title',
+  });
 
   return useMemo(
-    () => ({ loading, fetchError, loadMoreResults, noMoreResults }),
+    () => ({
+      loading,
+      fetchError,
+      loadMoreResults,
+      noMoreResults,
+      planetsBreadcrumbLabel,
+    }),
     []
   );
 }

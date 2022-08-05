@@ -1,4 +1,3 @@
-import { getPlanet } from '@/planet/services';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import { Planet } from '@/commons/types';
 import { useRouter } from 'next/router';
@@ -9,12 +8,14 @@ import {
 } from '@/commons/constants';
 import { PlanetInfo } from '../PlanetInfo';
 import { Resident } from '@/commons/types/models';
-import { getResidentIdFromURL } from './utils';
 import { useCallback, useMemo } from 'react';
 import { ResidentWithId } from '@/planet/types';
 import { PlanetResidentsGridLayout } from '../PlanetResidentsGridLayout';
 import { GridCard } from '../GridCard';
-import { getResidentById } from '@/commons/services';
+import { getPlanet, getResidentById } from '@/commons/services';
+import { Breadcrumb } from '@/commons/components/Breadcrumb';
+import { useTranslation } from './useTranslation';
+import { getResidentIdFromURL } from '@/commons/utils';
 
 export function MainContent(): JSX.Element {
   const router = useRouter();
@@ -61,18 +62,30 @@ export function MainContent(): JSX.Element {
     [router]
   );
 
+  const { planetsBreadcrumbLabel } = useTranslation();
+  const breadcrumbItems = useMemo(
+    () => [
+      { label: planetsBreadcrumbLabel, redirectURL: ROUTES.planets },
+      { label: planet?.name || '' },
+    ],
+    [planetsBreadcrumbLabel, planet?.name]
+  );
+
   return (
-    <div className="flex flex-row justify-between">
-      <PlanetInfo planet={planet as Planet} />
-      <PlanetResidentsGridLayout>
-        {residents?.map((resident) => (
-          <GridCard
-            key={`${resident.name}`}
-            resident={resident}
-            onClick={onGridCardButtonClick}
-          />
-        ))}
-      </PlanetResidentsGridLayout>
-    </div>
+    <>
+      <Breadcrumb items={breadcrumbItems} />
+      <div className="flex flex-row justify-between">
+        <PlanetInfo planet={planet as Planet} />
+        <PlanetResidentsGridLayout>
+          {residents?.map((resident) => (
+            <GridCard
+              key={`${resident.name}`}
+              resident={resident}
+              onClick={onGridCardButtonClick}
+            />
+          ))}
+        </PlanetResidentsGridLayout>
+      </div>
+    </>
   );
 }

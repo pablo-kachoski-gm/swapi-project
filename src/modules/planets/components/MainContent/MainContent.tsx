@@ -1,4 +1,5 @@
 import { PLANETS_QUERY_KEY, ROUTES } from '@/commons/constants';
+import { Breadcrumb } from '@/commons/components/Breadcrumb';
 import { GridCard } from '@/planets/components/GridCard';
 import { PlanetsGridLayout } from '@/planets/components/PlanetsGridLayout';
 import { SearchBar } from '@/planets/components/SearchBar';
@@ -10,7 +11,7 @@ import { useRouter } from 'next/router';
 import { ChangeEvent, useCallback, useMemo, useRef } from 'react';
 import { LoadMoreButton } from '../LoadMoreButton';
 import { useTranslation } from './useTranslation';
-import { getPlanetIdFromURL } from './utils';
+import { getPlanetIdFromURL } from '@/commons/utils';
 
 export function MainContent(): JSX.Element {
   const router = useRouter();
@@ -25,8 +26,13 @@ export function MainContent(): JSX.Element {
       }
     );
 
-  const { loading, fetchError, loadMoreResults, noMoreResults } =
-    useTranslation();
+  const {
+    loading,
+    fetchError,
+    loadMoreResults,
+    noMoreResults,
+    planetsBreadcrumbLabel,
+  } = useTranslation();
 
   const planets = useMemo(
     () =>
@@ -62,11 +68,17 @@ export function MainContent(): JSX.Element {
     [router]
   );
 
+  const breadcrumbItems = useMemo(
+    () => [{ label: planetsBreadcrumbLabel }],
+    [planetsBreadcrumbLabel]
+  );
+
   if (isLoading) return <div>{loading}</div>;
   if (error) return <div>{fetchError}</div>;
 
   return (
     <>
+      <Breadcrumb items={breadcrumbItems} />
       <SearchBar ref={searchRef} onChange={onSearchPlanet} />
       <PlanetsGridLayout>
         {filteredData?.map((planet) => (

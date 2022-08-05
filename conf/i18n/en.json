@@ -9,6 +9,7 @@
   "page.planets.labels.terrain.title": "Terrain",
   "page.planets.labels.gravity.title": "Gravity",
   "page.planets.labels.detailsButton.title": "See details",
+  "page.planets.labels.breadcrumb.title": "All Planets",
   "page.planets.loading": "Loading...",
   "page.planets.fetchError": "Error fetching. Please contact support",
   "page.planets.button.loadMoreResults": "Load more planets",

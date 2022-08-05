@@ -1,6 +1,6 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { MainContent } from '@/planet/components/MainContent';
-import { getPlanet } from '@/planet/services';
+import { getPlanet } from '@/commons/services';
 import { PLANET_QUERY_KEY, ROUTES } from '@/commons/constants';
 import { MainLayout } from '@/planet/components/MainLayout';
 import { ReactNode } from 'react';

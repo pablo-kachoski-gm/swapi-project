@@ -9,9 +9,9 @@ export interface Resident {
   gender: string;
   homeworld: string;
   films: string[];
-  species: any[];
+  species: string[];
   vehicles: string[];
-  starships: any[];
+  starships: string[];
   created: string;
   edited: string;
   url: string;
