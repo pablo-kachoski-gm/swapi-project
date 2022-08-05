@@ -1,30 +1,25 @@
-import { PLANETS_QUERY_KEY, ROUTES } from '@/commons/constants';
+import { ROUTES } from '@/commons/constants';
 import { Breadcrumb } from '@/commons/components/Breadcrumb';
 import { GridCard } from '@/planets/components/GridCard';
 import { PlanetsGridLayout } from '@/planets/components/PlanetsGridLayout';
 import { SearchBar } from '@/planets/components/SearchBar';
-import { usePlanetsFilter } from '@/planets/hooks/usePlanetsFilter';
-import { getPlanets } from '@/planets/services';
-import { PlanetWithId } from '@/planets/types';
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { ChangeEvent, useCallback, useMemo, useRef } from 'react';
 import { LoadMoreButton } from '../LoadMoreButton';
 import { useTranslation } from './useTranslation';
-import { getPlanetIdFromURL } from '@/commons/utils';
+import { useMainContentData } from './useMainContentData';
 
 export function MainContent(): JSX.Element {
   const router = useRouter();
-  const { hasNextPage, isLoading, fetchNextPage, data, error, isFetching } =
-    useInfiniteQuery(
-      [PLANETS_QUERY_KEY],
-      (props) => getPlanets(props.pageParam),
-      {
-        getNextPageParam: (lastPageData) => lastPageData?.next || undefined,
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
-      }
-    );
+  const {
+    hasNextPage,
+    isFetching,
+    isLoading,
+    error,
+    fetchNextPage,
+    filterPlanets,
+    filteredData,
+  } = useMainContentData();
 
   const {
     loading,
@@ -33,19 +28,6 @@ export function MainContent(): JSX.Element {
     noMoreResults,
     planetsBreadcrumbLabel,
   } = useTranslation();
-
-  const planets = useMemo(
-    () =>
-      data?.pages.flatMap((planetPage) =>
-        planetPage?.results.map<PlanetWithId>((planet) => ({
-          ...planet,
-          id: getPlanetIdFromURL(planet.url),
-        }))
-      ) || [],
-    [data]
-  );
-
-  const { filteredData, filterPlanets } = usePlanetsFilter(planets);
 
   const disabledLoadMoreButton = !hasNextPage || isFetching;
 

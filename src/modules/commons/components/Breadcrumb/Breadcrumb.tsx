@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Fragment } from 'react';
 
 interface BreadcrumbItem {
   label: string;
@@ -17,21 +18,19 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
       {items.map((item, index, arr) => {
         if (index + 1 === arr.length)
           return (
-            <>
+            <Fragment key={`${item.label}`}>
               {separator}
               {item.label}
-            </>
+            </Fragment>
           );
 
         return (
-          <>
+          <Fragment key={`${item.label}`}>
             {separator}
             <span className="text-blue-400 underline">
-              <Link key={`${item.label}`} href={item.redirectURL as string}>
-                {item.label}
-              </Link>
+              <Link href={item.redirectURL as string}>{item.label}</Link>
             </span>
-          </>
+          </Fragment>
         );
       })}
     </nav>
